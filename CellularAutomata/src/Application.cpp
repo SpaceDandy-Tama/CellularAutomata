@@ -153,6 +153,7 @@ int main(void)
     sf::Music music;
     bool loadedMusic = music.openFromFile(Resource::Path("Syn Cole - Feel Good [NCS Release].ogg"));
     music.setLoop(true);
+    music.setVolume(22);
     music.play();
 
     std::cout << "Paint the cells to life using your mouse" << std::endl;
