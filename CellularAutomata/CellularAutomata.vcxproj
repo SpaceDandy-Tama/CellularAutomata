@@ -186,8 +186,13 @@ xcopy /C/H/R/S/Y/I $(SolutionDir)OrzoEngine\Dependencies\SFML\bin\$(Platform)\op
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\Cell.cpp" />
+    <ClCompile Include="src\Game.cpp" />
   </ItemGroup>
-
+  <ItemGroup>
+    <ClInclude Include="src\Cell.h" />
+    <ClInclude Include="src\Game.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
