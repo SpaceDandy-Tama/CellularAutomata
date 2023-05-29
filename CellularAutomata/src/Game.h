@@ -5,11 +5,8 @@
 
 namespace CellularAutomata
 {
-#define CELLSTATE_DEAD  0;
-#define CELLSTATE_ALIVE 1;
-
-#define GridWidth 128
-#define GridHeight 128
+#define GridWidth 64
+#define GridHeight 64
 
 	class Game
 	{
@@ -19,7 +16,10 @@ namespace CellularAutomata
 		static Material* MaterialDead;
 
 		static glm::ivec2 GridSize;
+		static float CellOffset;
 		static float CellSize;
 		static float CellInline;
+
+		static bool Paused;
 	};
 }
