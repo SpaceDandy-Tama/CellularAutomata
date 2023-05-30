@@ -27,29 +27,16 @@ namespace CellularAutomata
 		{
 			Entity::OnUpdate(ts);
 
-			if (CurrentState != NextState)
-			{
-				CurrentState = NextState;
-
-				if (CurrentState == CellState::Alive)
-					m_Material = Game::MaterialAlive;
-				else
-					m_Material = Game::MaterialDead;
-			}
-
-			if (Game::Paused)
-				return;
-
 			int numAlive = 0;
 
-			CheckNeighboor(glm::ivec2(GridPos.x - 1, GridPos.y - 1)	, numAlive);
-			CheckNeighboor(glm::ivec2(GridPos.x - 1, GridPos.y)		, numAlive);
-			CheckNeighboor(glm::ivec2(GridPos.x - 1, GridPos.y + 1)	, numAlive);
-			CheckNeighboor(glm::ivec2(GridPos.x + 1, GridPos.y - 1)	, numAlive);
-			CheckNeighboor(glm::ivec2(GridPos.x + 1, GridPos.y)		, numAlive);
-			CheckNeighboor(glm::ivec2(GridPos.x + 1, GridPos.y + 1)	, numAlive);
-			CheckNeighboor(glm::ivec2(GridPos.x, GridPos.y - 1)		, numAlive);
-			CheckNeighboor(glm::ivec2(GridPos.x, GridPos.y + 1)		, numAlive);
+			CheckNeighboor(glm::ivec2(GridPos.x - 1, GridPos.y - 1), numAlive);
+			CheckNeighboor(glm::ivec2(GridPos.x - 1, GridPos.y), numAlive);
+			CheckNeighboor(glm::ivec2(GridPos.x - 1, GridPos.y + 1), numAlive);
+			CheckNeighboor(glm::ivec2(GridPos.x + 1, GridPos.y - 1), numAlive);
+			CheckNeighboor(glm::ivec2(GridPos.x + 1, GridPos.y), numAlive);
+			CheckNeighboor(glm::ivec2(GridPos.x + 1, GridPos.y + 1), numAlive);
+			CheckNeighboor(glm::ivec2(GridPos.x, GridPos.y - 1), numAlive);
+			CheckNeighboor(glm::ivec2(GridPos.x, GridPos.y + 1), numAlive);
 
 			if (CurrentState == CellState::Alive)
 			{
@@ -61,6 +48,19 @@ namespace CellularAutomata
 				if (numAlive == 3)
 					NextState = CellState::Alive;
 			}
+		}
+
+		void ConfirmStateChanges()
+		{
+			if (CurrentState == NextState)
+				return;
+
+			CurrentState = NextState;
+
+			if (CurrentState == CellState::Alive)
+				m_Material = Game::MaterialAlive;
+			else
+				m_Material = Game::MaterialDead;
 		}
 
 		void CheckNeighboor(glm::ivec2 gridPos, int& numAlive)

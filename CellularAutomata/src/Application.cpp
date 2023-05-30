@@ -19,14 +19,6 @@ bool IsWithinScreenBounds(glm::vec2 pos)
 
 void OnUpdate(Timestep& ts)
 {
-    for (int y = 0; y < Game::GridSize.y; y++)
-    {
-        for (int x = 0; x < Game::GridSize.x; x++)
-        {
-            Cell::All[x][y]->OnUpdate(ts);
-        }
-    }
-
     //Pause/Unpause
     if (Input::GetKeyDown(KeyCode::Space))
     {
@@ -39,7 +31,30 @@ void OnUpdate(Timestep& ts)
         History.clear();
     }
 
-    if (Game::Paused)
+    if (Game::Paused == false)
+    {
+        //Speed Control
+        if (Input::GetKeyDown(KeyCode::KeypadMinus))
+        {
+            if (Engine::VerticalSyncBufferCount < 20)
+                glfwSwapInterval(Engine::VerticalSyncBufferCount++);
+        }
+        else if (Input::GetKeyDown(KeyCode::KeypadPlus))
+        {
+            if (Engine::VerticalSyncBufferCount > 1)
+                glfwSwapInterval(Engine::VerticalSyncBufferCount--);
+        }
+
+        //Update
+        for (int y = 0; y < Game::GridSize.y; y++)
+        {
+            for (int x = 0; x < Game::GridSize.x; x++)
+            {
+                Cell::All[x][y]->OnUpdate(ts);
+            }
+        }
+    }
+    else
     {
         //Undo
         if (Input::GetMouseButtonDown(KeyCode::Mouse1))
@@ -82,22 +97,16 @@ void OnUpdate(Timestep& ts)
         //Save
         if (Input::GetKey(KeyCode::LeftControl) && Input::GetKeyDown(KeyCode::S))
         {
-
+            std::cout << "!Saving not implemented yet!" << std::endl;
         }
     }
 
-    if (Game::Paused == false)
+    //State Changes
+    for (int y = 0; y < Game::GridSize.y; y++)
     {
-        //Speed Control
-        if (Input::GetKeyDown(KeyCode::KeypadMinus))
+        for (int x = 0; x < Game::GridSize.x; x++)
         {
-            if (Engine::VerticalSyncBufferCount < 20)
-                glfwSwapInterval(Engine::VerticalSyncBufferCount++);
-        }
-        else if (Input::GetKeyDown(KeyCode::KeypadPlus))
-        {
-            if (Engine::VerticalSyncBufferCount > 1)
-                glfwSwapInterval(Engine::VerticalSyncBufferCount--);
+            Cell::All[x][y]->ConfirmStateChanges();
         }
     }
 }
@@ -158,6 +167,7 @@ int main(void)
 
     std::cout << "Paint the cells to life using your mouse" << std::endl;
     std::cout << "Ctrl+Z to undo your last stroke" << std::endl;
+    std::cout << "Ctrl+S to save your painting" << std::endl;
     std::cout << "Press Space to pause/unpause the simulation" << std::endl;
     std::cout << "Num+ and Num- to adjust simulation speed" << std::endl;
     std::cout << "Backspace annihilates all the cells while paused" << std::endl;
