@@ -128,6 +128,7 @@ int main(void)
     Engine::WindowWidth  = GridWidth * Game::CellSize + GridWidth * Game::CellInline + 2 * Game::CellInline;
     Engine::WindowHeight = GridHeight * Game::CellSize + GridHeight * Game::CellInline + 2 * Game::CellInline;
     Engine::EnableTests = false;
+    Engine::EnableSoundTest = false;
     Engine::WindowTitle = "Game of Life";
     Engine::AntiAliasingSampleCount = 4;
     Engine::VerticalSyncBufferCount = 0;
