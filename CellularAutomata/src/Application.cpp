@@ -1,5 +1,3 @@
-#include <SFML/Audio.hpp>
-
 #include "Engine.h"
 #include "Resource.h"
 
@@ -129,9 +127,10 @@ int main(void)
     Engine::WindowHeight = GridHeight * Game::CellSize + GridHeight * Game::CellInline + 2 * Game::CellInline;
     Engine::EnableTests = false;
     Engine::EnableSoundTest = false;
+    Engine::ListResourceDirectories = false;
+    Engine::ShowInitializationOutput = false;
     Engine::WindowTitle = "Game of Life";
     Engine::AntiAliasingSampleCount = 4;
-    Engine::VerticalSyncBufferCount = 0;
 
     Engine::UpdateCallback = OnUpdate;
     Engine::RenderCallback = OnRender;
@@ -160,19 +159,13 @@ int main(void)
 
     Camera::GetCamera().m_Position = glm::vec3(Game::GridSize.x, Game::GridSize.y, 0) * (Game::CellSize + Game::CellInline) * 0.5f;
 
-    sf::Music music;
-    bool loadedMusic = music.openFromFile(Resource::Path("Syn Cole - Feel Good [NCS Release].ogg"));
-    music.setLoop(true);
-    music.setVolume(22);
-    music.play();
-
+    std::cout << "INSTRUCTIONS:" << std::endl << std::endl;
     std::cout << "Paint the cells to life using your mouse" << std::endl;
     std::cout << "Ctrl+Z to undo your last stroke" << std::endl;
-    std::cout << "Ctrl+S to save your painting" << std::endl;
+    //std::cout << "Ctrl+S to save your painting" << std::endl; //NOT IMPLEMENTED YET
     std::cout << "Press Space to pause/unpause the simulation" << std::endl;
     std::cout << "Num+ and Num- to adjust simulation speed" << std::endl;
     std::cout << "Backspace annihilates all the cells while paused" << std::endl;
-    std::cout << "Music: Syn Cole - Feel Good [NCS Release]" << std::endl;
 
     //Run
     return Engine::Run();
